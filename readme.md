@@ -37,7 +37,7 @@ After successfully building the project consists of several Docker containers
 * Nginx server
 * Basic reverse proxy config, mapping http port 3000 to port 80
 * Frontend is served through nginx @ http://localhost
-* [🛠️ Nginx Docs: Reverse Proxy]([Title](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/))
+* [🛠️ Nginx Docs: Reverse Proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
 
 ### mongoDB
 * MongoDB database
