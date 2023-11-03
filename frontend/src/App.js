@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { DevSidebar } from './components/DevSidebar/DevSidebar';
 
-function App() {
+
+// Import your components
+import { SpotifyTokenExchange } from './components/DevSidebar/SpotifyTokenExchange';
+
+
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="http://localhost:4000/login"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Login to Spotify
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<DevSidebar/>} />
+          <Route path="/spotify-token-exchange" element={<SpotifyTokenExchange />} />
+        </Routes>
+      </Router>
+
+    </>
   );
 }
 
