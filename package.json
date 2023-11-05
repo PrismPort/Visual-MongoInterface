@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@types/express": "^4.17.20",
-    "@types/mongoose": "^5.11.97",
-    "next-auth": "^4.24.4"
-  }
-}

@@ -8,4 +8,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD ["npm", "start"]
+CMD ["npx", "nodemon", "./src/server.ts"]
