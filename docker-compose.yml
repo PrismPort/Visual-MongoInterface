@@ -22,13 +22,15 @@ services:
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
+    command: npm run dev
 
   nginx:
     image: nginx:latest
