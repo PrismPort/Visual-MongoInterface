@@ -5,6 +5,11 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [error, setError] = useState(null);
 
+  interface ProfileData {
+    display_name: string;
+    // Add any other properties you expect to receive from the backend
+  }
+
   useEffect(() => {
     // Fetch the profile data from the backend
     const fetchProfileData = async () => {
@@ -35,13 +40,19 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div>
-      <h1>Profile Information</h1>
-      {/* Render your profile data here */}
-      <p>{profileData.display_name}</p>
-    </div>
-  );
+  // Add a type guard to check if profileData is not null
+  if (profileData !== null) {
+    const ProfileData = profileData as ProfileData;
+    return (
+      <div>
+        <h1>Profile Information</h1>
+        {/* Render your profile data here */}
+        <p>{ProfileData.display_name}</p>
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default Profile;
