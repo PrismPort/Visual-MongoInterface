@@ -1,20 +1,22 @@
-# Use the Node 18 image
+# Use a suitable base image
 FROM node:18
 
-# Set the working directory
-WORKDIR /app
+# Create and set the working directory
+# Set working directory
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Install app dependencies by copying
+# both package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the code
+# Bundle app source
 COPY . .
 
-# Expose the port Next.js runs on
+# Next.js uses port 3000 by default
 EXPOSE 3000
 
-# Run the app in development mode
-CMD ["npm", "run", "dev"]
+# Start the development server
+CMD [ "npm", "run", "dev" ]

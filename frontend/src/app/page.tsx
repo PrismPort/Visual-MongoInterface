@@ -1,15 +1,15 @@
-import Image from "next/image";
+"use client";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Display your Spotify profile data</h1>
+    <main className="flex flex-col items-center justify-between p-24">
+      <h1>Display your Spotify Profile Data</h1>
 
       <section id="profile">
         <h2>
           Logged in as <span id="displayName"></span>
         </h2>
-        <span id="avatar"></span>
+        <img id="avatar" width="200" src="#" />
         <ul>
           <li>
             User ID: <span id="id"></span>
