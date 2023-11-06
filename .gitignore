@@ -3,6 +3,7 @@ docker-compose.override.yml
 
 # Node modules
 frontend/node_modules/
+frontend/node_modules/@next
 backend/node_modules/
 
 # Ignore Docker volume data (use with caution)
@@ -16,6 +17,8 @@ backend/dist/
 
 # Docker volumes
 *.data/
+
+*.next/
 
 # IDE specific
 .vscode/
