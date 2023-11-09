@@ -10,7 +10,7 @@ The Backend is used to communicate to a mongoDB server through the official mong
 
 ## Authentication
 
-- All requests require a mongoDB URL in the body
+- All requests, except `/connect-to-mongodb` require a mongoDB URL in the body
 
 ```json
 {
@@ -20,13 +20,21 @@ The Backend is used to communicate to a mongoDB server through the official mong
 
 ## Endpoints
 
-### Connect to mongoDB Server
+### Connect to mongoDB server
 
 - **URL:** `/connect-to-mongodb`
 - **Method:** POST
-- **Description:** Tries to connect to the provided mongoDB URL
+- **Description:** Receives credentials and mongoDB adress and returns a concatenated mongoURL
 - **Request Parameters:**
-  - None
+  - in post request body:
+  ```json
+  {
+  "user":"",
+  "password":"",
+  "adress": "127.0.0.1",
+  "port":"27017"
+  }
+  ```
 
 - **Response:**
 

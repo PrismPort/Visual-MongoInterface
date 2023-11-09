@@ -6,11 +6,22 @@ const { MongoClient } = require("mongodb");
 
 const PORT = process.env.EXPRESS_PORT;
 
+const os = require('os');
+const networkInterfaces = os.networkInterfaces();
+const localhostIP = networkInterfaces.lo ? networkInterfaces.lo[0].address : '127.0.0.1';
+
+console.log(`IP Address of localhost: ${localhostIP}`);
+
 
 // starting express
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+if (!PORT) {
+  console.error('Express port is not defined');
+  process.exit(1);
+}
+
+app.listen(parseInt(PORT), '0.0.0.0', () => {
+  console.log(`Server is running at ${PORT}`);
 });
 
 // mongodb connection string for static tests
@@ -84,9 +95,29 @@ app.get('/query/:database', async (req: Request, res: Response) => {
 
 
 app.post('/connect-to-mongodb', async (req: Request, res: Response) => {
-  const { mongoURL } = req.body;
+  let mongoURL = null;
 
-  if (!mongoURL) {
+  // construct mongo url
+  const  user  = req.body.name;
+  const  password  = req.body.password;
+  const  port  = req.body.port;
+  let  adress  = req.body.adress;
+
+  // hack for docker
+  if (adress == "localhost" || adress == "127.0.0.1") {
+    adress = "host.docker.internal";
+  }
+
+  if (user == null || password == null) {
+    mongoURL = `mongodb://${adress}:${port}`;
+  } else {
+    mongoURL = `mongodb://${user}:${password}@${adress}:${port}`;
+  }
+
+  console.log(mongoURL);
+
+
+  if (!mongoURL === null) {
     return res.status(400).json({ error: 'MongoDB URL is required' });
   }
 
