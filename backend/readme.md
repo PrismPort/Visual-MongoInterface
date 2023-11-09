@@ -10,12 +10,13 @@ The Backend is used to communicate to a mongoDB server through the official mong
 
 ## Authentication
 
-- All requests, except `/connect-to-mongodb` require a mongoDB URL in the body
+- All requests, except `/connect-to-mongodb` require a mongoDB URL in the header
 
-```json
-{
-  "mongoURL": "mongodb://localhost:27017/"
-}
+```javascript
+  headers: {
+    'Content-Type': 'application/json',
+    'mongoURL': mongoURL as string,
+  },
 ```
 
 ## Endpoints
@@ -27,6 +28,7 @@ The Backend is used to communicate to a mongoDB server through the official mong
 - **Description:** Receives credentials and mongoDB adress and returns a concatenated mongoURL
 - **Request Parameters:**
   - in post request body:
+
   ```json
   {
   "user":"",
@@ -56,7 +58,8 @@ The Backend is used to communicate to a mongoDB server through the official mong
 - **Response:**
 
   ```json
-  ["admin",
+  [
+  "admin",
   "config",
   "local",
   "yourdatabase"

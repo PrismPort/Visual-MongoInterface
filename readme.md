@@ -25,13 +25,13 @@ After successfully building the project consists of several Docker containers
 * React dev environment with hot reloading
 * Port 3000 is exposed
 * Open http://localhost:3000 in browser
-* [📘 Frontend Manual](./frontend/README.md)
+* [📘 Frontend Manual](./frontend/readme.md)
 
 ### backend
 * Node.js / Express server
 * Port 4000 is exposed
 * API endpoints are exposed at http://localhost:4000/
-* [📘 Backend Manual](./backend/README.md)
+* [📘 Backend Manual](./backend/readme.md)
 
 ### reverse proxy
 * Nginx server

@@ -10,7 +10,6 @@ const os = require('os');
 const networkInterfaces = os.networkInterfaces();
 const localhostIP = networkInterfaces.lo ? networkInterfaces.lo[0].address : '127.0.0.1';
 
-console.log(`IP Address of localhost: ${localhostIP}`);
 
 
 // starting express
@@ -24,6 +23,15 @@ app.listen(parseInt(PORT), '0.0.0.0', () => {
   console.log(`Server is running at ${PORT}`);
 });
 
+// cors settings onyl for development
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers","*");
+  next();
+});
+
+
+
 // mongodb connection string for static tests
 /* const mongo_url = process.env.MONGO_URL;
 const mongo_port = process.env.MONGO_PORT;
@@ -35,10 +43,11 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get('/query-databases', async (req: Request, res: Response) => {
-  const { mongoURL } = req.body; // Access the MongoDB URL from the request body
+  // const { mongoURL } = req.body; // Access the MongoDB URL from the request body
+  const mongoURL = req.header('mongoURL');
 
   if (!mongoURL) {
-    return res.status(400).json({ error: 'MongoDB URL is required in the request body' });
+    return res.status(400).json({ error: 'MongoDB URL is required in the request header' });
   }
 
   try {
@@ -62,12 +71,14 @@ app.get('/query-databases', async (req: Request, res: Response) => {
 });
 
 app.get('/query/:database', async (req: Request, res: Response) => {
-  const { mongoURL } = req.body; // Access the MongoDB URL from the request body
+  //const { mongoURL } = req.body; // Access the MongoDB URL from the request body
+  // get mongo url from header
+  const mongoURL = req.header('mongoURL');
   const { database } = req.params;
   const { collection } = req.params;
 
   if (!mongoURL) {
-    return res.status(400).json({ error: 'MongoDB URL is required in the request body' });
+    return res.status(400).json({ error: 'MongoDB URL is required in the request header' });
   }
 
   try {
