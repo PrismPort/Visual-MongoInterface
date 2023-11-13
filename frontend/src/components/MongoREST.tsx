@@ -95,7 +95,7 @@ const MongoLogin = () => {
                         <input type="text" name="port" defaultValue={"27017"}/>
                     </label>
 
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" id="submit-button" />
                 </form>
             </>
         );

@@ -56,3 +56,15 @@
     color: #fff;
 }
 
+#submit-button {
+   cursor: pointer;
+}
+
+#submit-button:hover {
+    background-color: #ccc;
+}
+
+#submit-button:active {
+    background-color: #aaa;
+}
+
