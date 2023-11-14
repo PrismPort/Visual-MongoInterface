@@ -77,26 +77,32 @@ const MongoLogin = () => {
     } else {
         return (
             <>
-                <form className='LoginForm' onSubmit={handleSubmit}>
-                    <label>
-                        Username:
-                        <input type="text" name="username" />
-                    </label>
-                    <label>
-                        Password:
-                        <input type="text" name="password" />
-                    </label>
-                    <label>
-                        Address:
-                        <input type="text" name="adress" defaultValue={"127.0.0.1"}/>
-                    </label>
-                    <label>
-                        Port:
-                        <input type="text" name="port" defaultValue={"27017"}/>
-                    </label>
+                <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+                    <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Connect to MongoDB</h2>
 
-                    <input type="submit" value="Submit" id="submit-button" />
-                </form>
+                    <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
+                        <form className='space-y-4' onSubmit={handleSubmit}>
+                            <label className='block text-sm font-medium leading-6 text-gray-900'>
+                                Username:
+                                <input type="text" name="username" className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+                            </label>
+                            <label className='block text-sm font-medium leading-6 text-gray-900'>
+                                Password:
+                                <input type="text" name="password" className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+                            </label>
+                            <label className='block text-sm font-medium leading-6 text-gray-900'>
+                                Address:
+                                <input type="text" name="adress" defaultValue={"127.0.0.1"} className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+                            </label>
+                            <label className='block text-sm font-medium leading-6 text-gray-900'>
+                                Port:
+                                <input type="text" name="port" defaultValue={"27017"} className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+                            </label>
+
+                            <button type="submit" className='flex w-full justify-center rounded-md  bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>Submit</button>
+                        </form>
+                    </div>
+                </div>
             </>
         );
     }
@@ -130,19 +136,39 @@ const MongoOptions = () => {
     else {
         return (
             <>
-                <div className='MongoOptions'>
-                    <h1>Connected to MongoDB</h1>
-                    <p>URL: {mongoURL}</p>
-                    <button onClick={handleShowDatabases}>Show all databases</button>
-                    {databases.length > 0 && (
-                        <ul>
-                            {databases.map((database) => (
-                                <li key={database}>{database}</li>
-                            ))}
-                        </ul>
-                    )}
+                <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+                    <h1 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Connected to MongoDB</h1>
 
-                    <button id='button-red' onClick={deleteMongoURL}>logout</button>
+                    <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
+                        <p className='text-center text-gray-900'>URL: {mongoURL}</p>
+                        <button
+                            onClick={handleShowDatabases}
+                            className='flex w-full justify-center rounded-md bg-blue-500 text-white py-2 px-4 mt-4 hover:bg-blue-700'
+                        >
+                            Show all databases
+                        </button>
+                        {databases.length > 0 && (
+                            <ul className='mt-4'>
+                                {databases.map((database) => (
+                                    <li key={database} className='mb-2'>
+                                        <a
+                                            href={`#${database}`}
+                                            className='hover:underline text-blue-500 hover:text-blue-700'
+                                        >
+                                            {database}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        <button
+                            onClick={deleteMongoURL}
+                            className='flex w-full justify-center rounded-md bg-red-500 text-white py-2 px-4 mt-4 hover:bg-red-700'
+                        >
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </>
         );
