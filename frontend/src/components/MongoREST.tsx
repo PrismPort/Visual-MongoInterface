@@ -1,6 +1,7 @@
 import React from 'react';
 import './MongoREST.css';
 import { useState } from 'react';
+import DatabaseInfo from './DatabaseInfo';
 
 interface MongoLoginProps {
     username: string;
@@ -180,6 +181,7 @@ const deleteMongoURL = () => {
     window.location.reload();
 };
 
+/*
 const MongoREST = () => {
     return (
         <>
@@ -189,6 +191,61 @@ const MongoREST = () => {
             </div>
         </>
     );
+}
+*/
+
+
+const MongoREST = () => {
+    const mongoURL = localStorage.getItem('mongoURL');
+    const [selectedDatabase, setSelectedDatabase] = useState<string | null>(null); // Add state to track the selected database
+    const [databases, setDatabases] = useState<string[]>([]);
+
+    const handleShowDatabases = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/query-databases', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'mongoURL': mongoURL as string,
+                },
+            });
+            const data = await response.json();
+            setDatabases(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleDatabaseClick = (databaseName: string) => {
+        // Set the selected database when a database is clicked
+        setSelectedDatabase(databaseName);
+    };
+
+    if (mongoURL) {
+        return null;
+    } else {
+        return (
+            <>
+                <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
+                    <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Connect to MongoDB</h2>
+                    <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
+                        <form className='space-y-4' onSubmit={handleSubmit}>
+                            {/* ... (your login form inputs and submit button) */}
+                        </form>
+                    </div>
+                </div>
+                <div className='MongoREST'>
+                    {selectedDatabase ? ( // Display DatabaseInfo when a database is selected
+                        <DatabaseInfo databaseName={selectedDatabase} mongoURL={mongoURL as string} />
+                    ) : (
+                        <>
+                            {/* ... (rest of your original code for the login form) */}
+                        </>
+                    )}
+                </div>
+            </>
+        );
+    }
 }
 
 
