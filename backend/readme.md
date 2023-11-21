@@ -70,7 +70,7 @@ The Backend is used to communicate to a mongoDB server through the official mong
 
 - **URL:** `/query/:database`
 - **Method:** GET
-- **Description:** Lists all available databases on the server
+- **Description:** Lists all available collections of the specified database
 - **Request Parameters:**
   - database [name of the database you want to see collections from]
 

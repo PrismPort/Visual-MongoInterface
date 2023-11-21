@@ -1,10 +1,11 @@
 require('dotenv').config();
 import app from './app.js';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { Db } from 'mongodb';
 const { MongoClient } = require("mongodb");
 
 const PORT = process.env.EXPRESS_PORT;
+const DOCKER = process.env.DOCKER;
 
 const os = require('os');
 const networkInterfaces = os.networkInterfaces();
@@ -23,13 +24,34 @@ app.listen(parseInt(PORT), '0.0.0.0', () => {
   console.log(`Server is running at ${PORT}`);
 });
 
-// cors settings onyl for development
-app.use(function (req, res, next) {
+// cors settings only for development
+app.use((req: Request, res: Response, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers","*");
+  res.header("Access-Control-Allow-Headers", "*");
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
+
+
+// extract the mongo URL through middleware
+const mongoURL = async (req: Request, res: Response, next: NextFunction) => {
+  const mongoURL = req.header('mongoURL');
+  if (!mongoURL) {
+    return res.status(400).json({ error: 'MongoDB URL is required in the request header' });
+  }
+  try {
+    const client = new MongoClient(mongoURL, { useUnifiedTopology: true });
+    await client.connect();
+
+    // Add the client object to the req object
+    req.client = client;
+    next();
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    res.status(500).json({ error: 'Failed to connect to MongoDB' });
+  }
+}
+
 
 
 
@@ -72,8 +94,6 @@ app.get('/query-databases', async (req: Request, res: Response) => {
 });
 
 app.get('/query/:database', async (req: Request, res: Response) => {
-  //const { mongoURL } = req.body; // Access the MongoDB URL from the request body
-  // get mongo url from header
   const mongoURL = req.header('mongoURL');
   const { database } = req.params;
   const { collection } = req.params;
@@ -87,7 +107,7 @@ app.get('/query/:database', async (req: Request, res: Response) => {
     const client = new MongoClient(mongoURL, { useUnifiedTopology: true });
     await client.connect();
 
-    // Access the specified collection and query data
+    // Access the specified database and query data
     const db: Db = client.db(database);
     const collections = await db.listCollections().toArray();
 
@@ -105,18 +125,43 @@ app.get('/query/:database', async (req: Request, res: Response) => {
 
 });
 
+app.get('/query/:database/:collection/:limit', mongoURL, async (req: Request, res: Response) => {
+  const { database } = req.params;
+  const { collection } = req.params;
+
+  try {
+    const client: typeof MongoClient = req.client;
+
+    // Access the specified collection and query data with limit
+    const db: Db = client.db(database);
+    const collections = await db.collection(collection).find().limit(10).toArray();
+
+    // Close the MongoDB connection
+    await client.close();
+
+    res.json(collections);
+
+  } catch (error) {
+    console.error('Error querying data from MongoDB:', error);
+    res.status(500).json({ error: 'Failed to query data from MongoDB' });
+  }
+
+
+
+});
+
 
 app.post('/connect-to-mongodb', async (req: Request, res: Response) => {
   let mongoURL = null;
 
   // construct mongo url
-  const  user  = req.body.name;
-  const  password  = req.body.password;
-  const  port  = req.body.port;
-  let  adress  = req.body.adress;
+  const user = req.body.name;
+  const password = req.body.password;
+  const port = req.body.port;
+  let adress = req.body.adress;
 
-  // hack for docker
-  if (adress == "localhost" || adress == "127.0.0.1") {
+  // Docker config for mongoDB on localhost
+  if (DOCKER === "true" && (adress == "localhost" || adress == "127.0.0.1")) {
     adress = "host.docker.internal";
   }
 
