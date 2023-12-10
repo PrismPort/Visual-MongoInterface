@@ -16,6 +16,9 @@
   "scripts": {
     "build:css": "tailwindcss build src/styles.css -o src/tailwind.css",
     "start": "react-scripts start",
+    "start-local": "HOST=localhost react-scripts start",
+    "start-port": "PORT=3001 react-scripts start",
+    "start-local-port": "HOST=localhost PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -39,7 +42,9 @@
     ]
   },
   "devDependencies": {
+    "chart.js": "^4.4.1",
     "eslint-plugin-jest": "^27.6.0",
+    "react-chartjs-2": "^5.2.0",
     "typescript": "^3.2.1 || ^4"
   }
 }
