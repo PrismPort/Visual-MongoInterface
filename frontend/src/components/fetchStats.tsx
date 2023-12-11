@@ -9,7 +9,7 @@ interface Type {
 interface Stat {
     name: string;
     count: Number;
-    type: Array<string>;
+    type: Array<string> | string;
     probability: Number;
     types?: Type[];
   }
