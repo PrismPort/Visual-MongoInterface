@@ -1,0 +1,18 @@
+.outerSidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.innerSidebar{
+    background-color: #FFFFFF;
+    padding: 0.5em;
+
+    border-radius: 10px;
+    border: 3px solid transparent;
+    border-color: #000000;
+
+    width: 20vw;
+    height: 100vh;
+}

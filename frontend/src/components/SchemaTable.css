@@ -1,0 +1,22 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Add specific styling for cells in the second column */
+  td:nth-child(2) {
+    font-weight: bold;
+  }
+
+  td:nth-child(3) {
+    color: #ABABAB;
+  }
+
+  td:nth-child(4) {
+    color: #55CF69;
+  }
