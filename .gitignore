@@ -4,6 +4,7 @@ docker-compose.override.yml
 # Node modules
 frontend/node_modules/
 backend/node_modules/
+my-react-app/node_modules/
 
 # Ignore Docker volume data (use with caution)
 docker-compose-data/

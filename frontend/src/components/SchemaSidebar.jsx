@@ -6,7 +6,7 @@ const SchemaSidebar= () => {
 
     return (
         <>
-            <div className="outerSidebar">
+            <div className="outerSidebar"> {/* outerSidebar = flexbox, innerSidebar = flex element (in css) */}
                 <div className="innerSidebar">
                     <SchemaTable />
                 </div>

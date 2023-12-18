@@ -11,8 +11,8 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<MongoREST/>} />
-          <Route path="/eye" element={<EyeIcon label="eye0" name="eye0" id="eye0"/>} />
-          <Route path="/schema" element={<SchemaSidebar/>} />
+          <Route path="/eye" element={<EyeIcon label="eye0" name="eye0" id="eye0"/>} /> {/* for testing EyeIcon */}
+          <Route path="/schema" element={<SchemaSidebar/>} /> {/* for testing SchemaSidebar */}
         </Routes>
       </Router>
 
