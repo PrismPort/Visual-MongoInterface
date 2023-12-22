@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "Peter",
+        "age": 18
+    },
+    {
+        "id": 2,
+        "name": "Sally",
+        "age": 22.5
+    },
+    {
+        "id": 3,
+        "name": "Tim",
+        "age": 92,
+        "childern":{
+            "Tina": [null, 0, "Calculus"],
+            "Timon": {
+             "p1": true,
+             "p2": 4,
+             "p3": false
+                 },
+            "Tylor": true
+               },
+        "height": 170
+    }
+]
